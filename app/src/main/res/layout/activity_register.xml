@@ -8,7 +8,7 @@
     android:background="@drawable/peakpx">
 
     <EditText
-        android:id="@+id/txtConfirmPasswordRegister"
+        android:id="@+id/txtPasswordRegister"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="33dp"
@@ -17,7 +17,7 @@
         android:background="@drawable/input_text"
         android:drawableStart="@drawable/ic_baseline_lock_24"
         android:ems="10"
-        android:hint="Confirm Password"
+        android:hint="Password"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -30,13 +30,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/lato_bold"
-        android:text="Re-Type Password"
+        android:text="Password"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.203"
+        app:layout_constraintHorizontal_bias="0.117"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPasswordRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEmailRegister" />
 
     <EditText
         android:id="@+id/txtUsernameRegister"
@@ -56,16 +56,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <EditText
-        android:id="@+id/txtPasswordRegister"
+        android:id="@+id/txtEmailRegister"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="33dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="33dp"
         android:background="@drawable/input_text"
-        android:drawableStart="@drawable/ic_baseline_lock_24"
+        android:drawableStart="@drawable/ic_baseline_email_24"
         android:ems="10"
-        android:hint="Password"
+        android:hint="Email"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -106,11 +106,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/lato_bold"
-        android:text="Password"
+        android:text="Email"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintHorizontal_bias="0.124"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtUsernameRegister" />
 
@@ -126,5 +126,5 @@
         android:text="Register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtConfirmPasswordRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPasswordRegister" />
 </androidx.constraintlayout.widget.ConstraintLayout>
