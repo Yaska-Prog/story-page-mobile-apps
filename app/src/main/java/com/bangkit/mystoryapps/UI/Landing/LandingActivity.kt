@@ -1,8 +1,10 @@
-package com.bangkit.mystoryapps
+package com.bangkit.mystoryapps.UI.Landing
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.bangkit.mystoryapps.UI.Login.LoginActivity
+import com.bangkit.mystoryapps.UI.Regis.RegisterActivity
 import com.bangkit.mystoryapps.databinding.ActivityLandingBinding
 
 class LandingActivity : AppCompatActivity() {

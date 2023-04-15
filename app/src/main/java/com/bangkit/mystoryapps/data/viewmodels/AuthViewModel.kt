@@ -1,13 +1,9 @@
-package com.bangkit.mystoryapps.data
+package com.bangkit.mystoryapps.data.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bangkit.mystoryapps.data.local.Entity.RegisEntity
+import com.bangkit.mystoryapps.data.repositories.UserRepository
 
 class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
-    private val _message = MutableLiveData<String>()
-    val message: LiveData<String> = _message
 
     fun regisUser(username: String, email: String, password: String) = userRepository.register(username, email, password)
 

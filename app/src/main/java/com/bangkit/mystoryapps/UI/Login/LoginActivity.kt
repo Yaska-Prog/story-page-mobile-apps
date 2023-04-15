@@ -1,4 +1,4 @@
-package com.bangkit.mystoryapps
+package com.bangkit.mystoryapps.UI.Login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.bangkit.mystoryapps.data.AuthViewModel
+import com.bangkit.mystoryapps.UI.Main.MainActivity
+import com.bangkit.mystoryapps.data.viewmodels.AuthViewModel
 import com.bangkit.mystoryapps.data.Result
-import com.bangkit.mystoryapps.data.ViewModelFactory
+import com.bangkit.mystoryapps.data.viewmodels.ViewModelFactory
 import com.bangkit.mystoryapps.data.local.Entity.UserEntity
 import com.bangkit.mystoryapps.data.local.SharedPreferenceManager
 import com.bangkit.mystoryapps.databinding.ActivityLoginBinding
@@ -23,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+        val factory: ViewModelFactory = ViewModelFactory.getUserInstance(this)
         val sharedPreferenceManager = SharedPreferenceManager(this)
         val viewModel: AuthViewModel by viewModels {
             factory
@@ -43,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
                             startActivity(intent)
                         }
                         is Result.Error -> {
-                            Log.d("resErr", result.error)
+                            Log.e("resErr", result.error)
                             Toast.makeText(this, "Error: ${result.error}", Toast.LENGTH_LONG).show()
                         }
                         Result.Loading -> {
