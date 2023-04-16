@@ -46,7 +46,7 @@ class DetailStoryActivity : AppCompatActivity() {
     private fun showData(data: Story){
         Glide.with(this@DetailStoryActivity)
             .load(data.photoUrl)
-            .into(binding.imgDetailPhoto)
+            .into(binding.imgPreviewPhoto)
         binding.txtUsernameDetail.text = data.name
         binding.txtDescriptionDetail.text = data.description
     }

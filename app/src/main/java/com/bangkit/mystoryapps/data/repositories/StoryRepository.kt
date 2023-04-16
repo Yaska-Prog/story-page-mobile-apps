@@ -4,9 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.bangkit.mystoryapps.data.Result
 import com.bangkit.mystoryapps.data.local.Room.UserDao
+import com.bangkit.mystoryapps.data.remote.response.AddStoryResponse
 import com.bangkit.mystoryapps.data.remote.response.ListStoryItem
 import com.bangkit.mystoryapps.data.remote.response.Story
 import com.bangkit.mystoryapps.data.remote.retrofit.ApiService
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class StoryRepository private constructor(
     private val apiService: ApiService,
@@ -43,6 +46,19 @@ class StoryRepository private constructor(
             }
         } catch (e: Exception){
             emit(Result.Error("Retrofit error, message: ${e.message}"))
+        }
+    }
+
+    fun uploadImage(image: MultipartBody.Part, description: RequestBody): LiveData<Result<AddStoryResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val client = apiService.uploadStory(image, description)
+            if(client.isSuccessful && client.body() != null){
+                val responseBody = client.body()
+                emit(Result.Success(responseBody!!))
+            }
+        } catch (e: Exception){
+            emit(Result.Error("Retrofit Error, message: ${e.message}"))
         }
     }
 

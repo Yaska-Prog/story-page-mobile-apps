@@ -1,11 +1,13 @@
 package com.bangkit.mystoryapps.UI.Main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bangkit.mystoryapps.UI.UploadStory.AddStoryActivity
 import com.bangkit.mystoryapps.data.remote.response.ListStoryItem
 import com.bangkit.mystoryapps.data.viewmodels.ViewModelFactory
 import com.bangkit.mystoryapps.databinding.ActivityMainBinding
@@ -40,6 +42,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+        binding!!.fabAddStory.setOnClickListener{
+            val intent = Intent(this@MainActivity, AddStoryActivity::class.java)
+            startActivity(intent)
         }
     }
 
