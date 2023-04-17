@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginTop="32dp"
-        android:text="Camera X"
+        android:text="@string/camera_x"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardViewDetail" />
 
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="48dp"
-        android:text="Gallery"
+        android:text="@string/galeri"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardViewDetail" />
 
@@ -51,7 +51,7 @@
         android:layout_marginStart="1dp"
         android:layout_marginTop="52dp"
         android:fontFamily="@font/lato_bold"
-        android:text="Description"
+        android:text="@string/deskripsi"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.157"
@@ -66,9 +66,9 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="49dp"
         android:ems="10"
+        android:hint="@string/deskripsi"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
@@ -79,7 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="Upload"
+        android:text="@string/unggah"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

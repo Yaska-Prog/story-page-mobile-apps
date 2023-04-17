@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import com.bangkit.mystoryapps.R
+import com.bangkit.mystoryapps.UI.Main.MainActivity
 import com.bangkit.mystoryapps.data.Result
 import com.bangkit.mystoryapps.data.viewmodels.StoryViewModel
 import com.bangkit.mystoryapps.data.viewmodels.ViewModelFactory
@@ -78,7 +79,10 @@ class AddStoryActivity : AppCompatActivity() {
                             Toast.makeText(this, "Error: ${result.error}", Toast.LENGTH_LONG).show()
                         }
                         is Result.Success -> {
-                            Toast.makeText(this, "Berhasil mengupload gambar!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Berhasil mengupload gambar! Silahkan kembali ke main activity!", Toast.LENGTH_LONG).show()
+                            val intent = Intent(this@AddStoryActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
                         }
                     }
                 }

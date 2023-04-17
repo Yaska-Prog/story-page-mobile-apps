@@ -5,20 +5,18 @@ import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.bangkit.mystoryapps.R
 
-class EmailEditText : AppCompatEditText, View.OnTouchListener {
+class PasswordEditText: AppCompatEditText, View.OnTouchListener {
     private lateinit var clearButtonImage: Drawable
 
     private fun init(){
         clearButtonImage = ContextCompat.getDrawable(context, R.drawable.ic_baseline_clear_24) as Drawable
         setOnTouchListener(this)
-        hideClearButton()
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 // Do nothing.
@@ -27,8 +25,8 @@ class EmailEditText : AppCompatEditText, View.OnTouchListener {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (s.toString().isNotEmpty()) {
                     showClearButton()
-                    if(!s.toString().contains('@') || !s.toString().contains('.')){
-                        error = "Must be a valid email!"
+                    if(!s.toString().isEmpty() && s.toString().length < 8){
+                        error = "Password minimum is 8 characters"
                     }
                 } else hideClearButton()
             }
@@ -42,11 +40,11 @@ class EmailEditText : AppCompatEditText, View.OnTouchListener {
         setButtonDrawables(endOfTheText = clearButtonImage)
     }
     private fun hideClearButton() {
-        setButtonDrawables(endOfTheText = null)
+        setButtonDrawables()
     }
 
     private fun setButtonDrawables(
-        startOfTheText: Drawable = ContextCompat.getDrawable(context, R.drawable.ic_baseline_email_24) as Drawable,
+        startOfTheText: Drawable = ContextCompat.getDrawable(context, R.drawable.ic_baseline_lock_24) as Drawable,
         topOfTheText:Drawable? = null,
         endOfTheText:Drawable? = null,
         bottomOfTheText: Drawable? = null
@@ -93,11 +91,9 @@ class EmailEditText : AppCompatEditText, View.OnTouchListener {
                     MotionEvent.ACTION_UP -> {
                         clearButtonImage = ContextCompat.getDrawable(context, R.drawable.ic_baseline_clear_24) as Drawable
                         when {
-                            text != null -> {
-                                text?.clear()
-                                hideClearButton()
-                            }
+                            text != null -> text?.clear()
                         }
+                        hideClearButton()
                         return true
                     }
                     MotionEvent.ACTION_DOWN -> {

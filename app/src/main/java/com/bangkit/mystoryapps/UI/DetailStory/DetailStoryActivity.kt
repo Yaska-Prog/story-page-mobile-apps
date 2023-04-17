@@ -1,10 +1,12 @@
 package com.bangkit.mystoryapps.UI.DetailStory
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.bangkit.mystoryapps.UI.Main.MainActivity
 import com.bangkit.mystoryapps.data.Result
 import com.bangkit.mystoryapps.data.remote.response.Story
 import com.bangkit.mystoryapps.data.viewmodels.StoryViewModel
@@ -42,6 +44,13 @@ class DetailStoryActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this@DetailStoryActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+        super.onBackPressed()
     }
     private fun showData(data: Story){
         Glide.with(this@DetailStoryActivity)

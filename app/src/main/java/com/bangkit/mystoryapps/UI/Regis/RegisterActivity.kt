@@ -1,7 +1,10 @@
 package com.bangkit.mystoryapps.UI.Regis
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.bangkit.mystoryapps.data.viewmodels.AuthViewModel
@@ -16,6 +19,7 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
         supportActionBar?.hide()
+        playAnimation()
         val factory : ViewModelFactory = ViewModelFactory.getUserInstance(this)
         val viewModel: AuthViewModel by viewModels {
             factory
@@ -40,6 +44,21 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+    private fun playAnimation(){
+        val textRegis = ObjectAnimator.ofFloat(binding!!.txtRegRegister, View.ALPHA, 1f).setDuration(500)
+        val textUsername = ObjectAnimator.ofFloat(binding!!.txtUserRegister, View.ALPHA, 1f).setDuration(500)
+        val textPassword = ObjectAnimator.ofFloat(binding!!.txtPasswordRegister, View.ALPHA, 1f).setDuration(500)
+        val textEmail = ObjectAnimator.ofFloat(binding!!.txtEmailRegister, View.ALPHA, 1f).setDuration(500)
+        val txtUsername = ObjectAnimator.ofFloat(binding!!.txtUsernameRegister, View.ALPHA, 1f).setDuration(500)
+        val txtPassword = ObjectAnimator.ofFloat(binding!!.txtPasswordRegister, View.ALPHA, 1f).setDuration(500)
+        val txtEmail = ObjectAnimator.ofFloat(binding!!.txtEmailRegister, View.ALPHA, 1f).setDuration(500)
+        val btnRegis = ObjectAnimator.ofFloat(binding!!.btnRegis, View.ALPHA, 1f).setDuration(500)
+
+        AnimatorSet().apply {
+            playSequentially(textRegis, textUsername, txtUsername, textEmail, txtEmail, textPassword, txtPassword, btnRegis)
+            start()
         }
     }
 }

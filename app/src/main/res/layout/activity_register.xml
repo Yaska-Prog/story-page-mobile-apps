@@ -7,30 +7,32 @@
     tools:context=".UI.Regis.RegisterActivity"
     android:background="@drawable/peakpx">
 
-    <EditText
+    <com.bangkit.mystoryapps.UI.CustomView.PasswordEditText
         android:id="@+id/txtPasswordRegister"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="33dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="33dp"
+        android:alpha="0"
         android:background="@drawable/input_text"
         android:drawableStart="@drawable/ic_baseline_lock_24"
         android:ems="10"
-        android:hint="Password"
-        android:inputType="textPersonName"
+        android:hint="@string/password"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/textPasswordRegister" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/textPasswordRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
+        android:alpha="0"
         android:fontFamily="@font/lato_bold"
-        android:text="Password"
+        android:text="@string/password"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,40 +47,43 @@
         android:layout_marginStart="33dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="33dp"
+        android:alpha="0"
         android:background="@drawable/input_text"
         android:drawableStart="@drawable/ic_baseline_person_24"
         android:ems="10"
-        android:hint="Username"
+        android:hint="@string/username"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/txtUserRegister" />
 
-    <EditText
+    <com.bangkit.mystoryapps.UI.CustomView.EmailEditText
         android:id="@+id/txtEmailRegister"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="33dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="33dp"
+        android:alpha="0"
         android:background="@drawable/input_text"
         android:drawableStart="@drawable/ic_baseline_email_24"
         android:ems="10"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/textEmailRegister" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/txtRegRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
+        android:alpha="0"
         android:fontFamily="@font/lato_bold"
-        android:text="Register"
+        android:text="@string/register"
         android:textColor="#FFFFFF"
         android:textSize="60sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,26 +92,28 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/txtUserRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
+        android:alpha="0"
         android:fontFamily="@font/lato_bold"
-        android:text="Username"
+        android:text="@string/username"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.109"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/txtRegRegister" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/textEmailRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
+        android:alpha="0"
         android:fontFamily="@font/lato_bold"
-        android:text="Email"
+        android:text="@string/email"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,9 +128,10 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="20dp"
+        android:alpha="0"
         android:background="@drawable/register_button"
         android:fontFamily="@font/lato_bold"
-        android:text="Register"
+        android:text="@string/register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPasswordRegister" />

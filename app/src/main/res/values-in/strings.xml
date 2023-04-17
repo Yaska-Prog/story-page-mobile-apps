@@ -1,15 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MyStoryApps</string>
     <string name="appwidget_text">MyStory BANNER</string>
-    <string name="add_widget">Add widget</string>
-    <string name="app_widget_description">This is an MyStory widget description</string>
+    <string name="add_widget">Tambahkan widget</string>
+    <string name="app_widget_description">Ini adalah deskripsi widget</string>
     <string name="empty_text">NO DATA</string>
     <string name="camera_x">Camera X</string>
-    <string name="galeri">Gallery</string>
-    <string name="deskripsi">Description</string>
-    <string name="nama">Name</string>
-    <string name="unggah">Upload</string>
-    <string name="nama_pembuat">Creator:</string>
+    <string name="galeri">Galeri</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="nama">Nama</string>
+    <string name="unggah">Unggah</string>
+    <string name="nama_pembuat">Nama Pembuat:</string>
     <string name="textview">TextView</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
@@ -17,8 +18,9 @@
     <string name="to_mystoryapps">To MyStoryApps</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="have_no_account_sign_up_here">Have no account? Sign up Here!</string>
+    <string name="have_no_account_sign_up_here">Tidak punya akun? Daftarkan dirimu di sini!</string>
     <string name="username">Username</string>
-    <string name="logout">Logout</string>
-    <string name="langguage">Langguage</string>
+    <string name="logout">Keluar</string>
+    <string name="langguage">Bahasa</string>
+
 </resources>
