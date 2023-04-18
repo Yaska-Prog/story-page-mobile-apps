@@ -1,5 +1,6 @@
 package com.bangkit.mystoryapps.UI.Main
 
+import android.appwidget.AppWidgetManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.mystoryapps.R
 import com.bangkit.mystoryapps.UI.Landing.LandingActivity
 import com.bangkit.mystoryapps.UI.UploadStory.AddStoryActivity
+import com.bangkit.mystoryapps.Widget.ImageBannerWidget
 import com.bangkit.mystoryapps.data.remote.response.ListStoryItem
 import com.bangkit.mystoryapps.data.viewmodels.ViewModelFactory
 import com.bangkit.mystoryapps.databinding.ActivityMainBinding
@@ -101,10 +103,16 @@ class MainActivity : AppCompatActivity() {
         }
         super.onResume()
     }
-
-    private fun showData(listStory: List<ListStoryItem>){
+    fun showData(listStory: List<ListStoryItem>){
         binding!!.rvStory.layoutManager = LinearLayoutManager(this)
         val adapter = StoryAdapter(listStory)
         binding!!.rvStory.adapter = adapter
+        var listPhoto: ArrayList<String>? = null
+        for (story in listStory){
+            listPhoto?.add(story.photoUrl)
+        }
+        val intent = Intent(this, ImageBannerWidget::class.java)
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+        intent.putStringArrayListExtra("listPhoto", listPhoto as ArrayList<String>)
     }
 }

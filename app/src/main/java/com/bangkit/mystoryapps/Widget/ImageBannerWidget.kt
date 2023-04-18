@@ -21,6 +21,7 @@ class ImageBannerWidget : AppWidgetProvider() {
     companion object {
         private const val TOAST_ACTION = "com.bangkit.TOAST_ACTION"
         const val EXTRA_ITEM = "com.bangkit.EXTRA_ITEM"
+        var EXTRA_URL: ArrayList<String>? = null
 
         private fun updateAppWidget(
             context: Context,
@@ -68,6 +69,8 @@ class ImageBannerWidget : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
+        val intent = Intent()
+        val listPhoto: java.util.ArrayList<String> = intent.getStringArrayListExtra("listPhoto") as java.util.ArrayList<String>
         // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
