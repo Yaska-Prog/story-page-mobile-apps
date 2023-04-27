@@ -3,7 +3,6 @@ package com.bangkit.mystoryapps.data.repositories
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.bangkit.mystoryapps.data.Result
-import com.bangkit.mystoryapps.data.local.Room.UserDao
 import com.bangkit.mystoryapps.data.remote.response.AddStoryResponse
 import com.bangkit.mystoryapps.data.remote.response.ListStoryItem
 import com.bangkit.mystoryapps.data.remote.response.Story
@@ -13,7 +12,6 @@ import okhttp3.RequestBody
 
 class StoryRepository private constructor(
     private val apiService: ApiService,
-    private val userDao: UserDao
 ){
     fun getStories(): LiveData<Result<List<ListStoryItem>>> = liveData {
         emit(Result.Loading)
@@ -57,6 +55,9 @@ class StoryRepository private constructor(
                 val responseBody = client.body()
                 emit(Result.Success(responseBody!!))
             }
+            else{
+                emit(Result.Error("File yang akan di upload mengalami error, silahkan cek kembali file nya dan pastikan ukurannya tidak lebih dari 1 mb."))
+            }
         } catch (e: Exception){
             emit(Result.Error("Retrofit Error, message: ${e.message}"))
         }
@@ -67,10 +68,9 @@ class StoryRepository private constructor(
         private var instance: StoryRepository? = null
         fun getInstance(
             apiService: ApiService,
-            userDao: UserDao,
         ): StoryRepository =
             instance ?: synchronized(this){
-                instance ?: StoryRepository(apiService, userDao)
+                instance ?: StoryRepository(apiService)
             }.also { instance = it }
     }
 }

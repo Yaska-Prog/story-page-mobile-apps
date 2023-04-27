@@ -8,14 +8,12 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.registerForActivityResult
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModel
-import com.bangkit.mystoryapps.R
 import com.bangkit.mystoryapps.UI.Main.MainActivity
 import com.bangkit.mystoryapps.data.Result
 import com.bangkit.mystoryapps.data.viewmodels.StoryViewModel
@@ -36,6 +34,7 @@ class AddStoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddStoryBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
+        binding!!.progressBarAddStory.visibility = View.GONE
 
         val factory: ViewModelFactory = ViewModelFactory.getStoryInstance(this)
         val viewModel: StoryViewModel by viewModels { factory }
@@ -60,7 +59,7 @@ class AddStoryActivity : AppCompatActivity() {
 
     private fun uploadImage(viewModel: StoryViewModel){
         if(getFile != null){
-            val file = getFile as File
+            val file = reduceFileImage(getFile as File)
 
             val description = binding!!.txtDescriptionAddStory.text.toString().toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
@@ -73,12 +72,14 @@ class AddStoryActivity : AppCompatActivity() {
                 if(result != null){
                     when(result){
                         is Result.Loading -> {
-                            //pasang loading button
+                            binding!!.progressBarAddStory.visibility = View.VISIBLE
                         }
                         is Result.Error -> {
                             Toast.makeText(this, "Error: ${result.error}", Toast.LENGTH_LONG).show()
+                            binding!!.progressBarAddStory.visibility = View.GONE
                         }
                         is Result.Success -> {
+                            binding!!.progressBarAddStory.visibility = View.GONE
                             Toast.makeText(this, "Berhasil mengupload gambar! Silahkan kembali ke main activity!", Toast.LENGTH_LONG).show()
                             val intent = Intent(this@AddStoryActivity, MainActivity::class.java)
                             startActivity(intent)

@@ -1,6 +1,5 @@
 package com.bangkit.mystoryapps.data.remote.retrofit
 
-import android.content.SharedPreferences
 import com.bangkit.mystoryapps.data.local.SharedPreferenceManager
 import okhttp3.Interceptor
 import okhttp3.Response

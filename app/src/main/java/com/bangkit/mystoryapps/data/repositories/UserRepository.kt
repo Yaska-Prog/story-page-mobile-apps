@@ -3,15 +3,12 @@ package com.bangkit.mystoryapps.data.repositories
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.bangkit.mystoryapps.data.Result
-import com.bangkit.mystoryapps.data.local.Room.UserDao
 import com.bangkit.mystoryapps.data.remote.response.LoginResponse
 import com.bangkit.mystoryapps.data.remote.retrofit.ApiService
 
 class UserRepository private constructor(
     private val apiService: ApiService,
-    private val userDao: UserDao,
 ){
-    //apabila menggunakan live data tidak perlu di suspend, karena tujuan dari suspend adalah agar data yang dikirimkan berupa list yang dikirimkan terus menerus oleh karena itu karena livedata secara tidak langsung mengirimkan data secara terus menerus maka tidak diperlukan lagi suspend
     fun register(username: String, email: String, password: String): LiveData<Result<String>> = liveData {
         emit(Result.Loading)
         try {
@@ -58,10 +55,9 @@ class UserRepository private constructor(
         private var instance: UserRepository? = null
         fun getInstance(
             apiService: ApiService,
-            userDao: UserDao,
         ): UserRepository =
             instance ?: synchronized(this){
-                instance ?: UserRepository(apiService, userDao)
+                instance ?: UserRepository(apiService)
             }.also { instance = it }
     }
 }

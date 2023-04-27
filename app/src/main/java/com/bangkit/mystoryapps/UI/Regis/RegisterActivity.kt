@@ -33,7 +33,6 @@ class RegisterActivity : AppCompatActivity() {
                 if(result != null){
                     when(result){
                         is Result.Loading -> {
-                            //tambah loading di button
                         }
                         is Result.Error -> {
                             Toast.makeText(this, "Error: ${result.error}", Toast.LENGTH_LONG).show()

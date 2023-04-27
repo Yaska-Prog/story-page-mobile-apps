@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
                             sharedPreferenceManager.saveUser(user)
                             val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
+                            finish()
                         }
                         is Result.Error -> {
                             binding!!.progressLogin.visibility = View.GONE
@@ -85,5 +86,6 @@ class LoginActivity : AppCompatActivity() {
             playSequentially(txtLoginText, txtEmailTextLogin, username, txtPasswordTextLogin, password, btnLogin, txtSignUp)
             start()
         }
+        binding!!.progressLogin.visibility = View.GONE
     }
 }

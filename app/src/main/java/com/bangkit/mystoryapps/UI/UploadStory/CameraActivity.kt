@@ -13,7 +13,6 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.bangkit.mystoryapps.R
 import com.bangkit.mystoryapps.databinding.ActivityCameraBinding
 
 class CameraActivity : AppCompatActivity() {
