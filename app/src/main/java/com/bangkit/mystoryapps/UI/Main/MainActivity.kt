@@ -13,42 +13,45 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.mystoryapps.R
 import com.bangkit.mystoryapps.UI.Landing.LandingActivity
 import com.bangkit.mystoryapps.UI.UploadStory.AddStoryActivity
+import com.bangkit.mystoryapps.UI.maps.ListStoryMapsActivity
 import com.bangkit.mystoryapps.data.remote.response.ListStoryItem
 import com.bangkit.mystoryapps.data.viewmodels.ViewModelFactory
 import com.bangkit.mystoryapps.databinding.ActivityMainBinding
 import com.bangkit.mystoryapps.data.Result
+import com.bangkit.mystoryapps.data.local.Entity.StoryEntity
 import com.bangkit.mystoryapps.data.local.SharedPreferenceManager
 import com.bangkit.mystoryapps.data.viewmodels.StoryViewModel
 
 class MainActivity : AppCompatActivity() {
     private var binding: ActivityMainBinding? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
-
         val factory: ViewModelFactory = ViewModelFactory.getStoryInstance(this)
-        val viewModel: StoryViewModel by viewModels {
+        val viewmodel: StoryViewModel by viewModels {
             factory
         }
-        viewModel.getStories().observe(this){result ->
-            if(result!= null){
-                when(result){
-                    is Result.Loading -> {
-                        binding!!.progressBarMain.visibility = View.VISIBLE
-                    }
-                    is Result.Error -> {
-                        binding!!.progressBarMain.visibility = View.GONE
-                        Toast.makeText(this, "Error: ${result.error}", Toast.LENGTH_LONG).show()
-                    }
-                    is Result.Success -> {
-                        binding!!.progressBarMain.visibility = View.GONE
-                        showData(result.data)
-                    }
-                }
-            }
-        }
+        showData(viewModel = viewmodel)
+//        viewmodel.getStories().observe(this){result ->
+//            if(result!= null){
+//                when(result){
+//                    is Result.Loading -> {
+//                        binding!!.progressBarMain.visibility = View.VISIBLE
+//                    }
+//                    is Result.Error -> {
+//                        binding!!.progressBarMain.visibility = View.GONE
+//                        Toast.makeText(this, "Error: ${result.error}", Toast.LENGTH_LONG).show()
+//                    }
+//                    is Result.Success -> {
+//                        binding!!.progressBarMain.visibility = View.GONE
+//                        showData(result.data)
+//                    }
+//                }
+//            }
+//        }
         binding!!.fabAddStory.setOnClickListener{
             val intent = Intent(this@MainActivity, AddStoryActivity::class.java)
             startActivity(intent)
@@ -60,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         inflater.inflate(R.menu.main_menu, menu)
         val logout = menu?.findItem(R.id.btnLogout)
         val lang = menu?.findItem(R.id.btnChangeLang)
+        val map = menu?.findItem(R.id.btnSeeMap)
         val sharedPref = SharedPreferenceManager(this)
         logout?.setOnMenuItemClickListener { item: MenuItem? ->
             Toast.makeText(this, "Berhasil melakukan logout, silahkan kembali ke landing page!", Toast.LENGTH_LONG).show()
@@ -73,41 +77,57 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
             true
         }
-
+        map!!.setOnMenuItemClickListener {
+            val intent = Intent(this@MainActivity, ListStoryMapsActivity::class.java)
+            startActivity(intent)
+            true
+        }
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onResume() {
+//        val factory: ViewModelFactory = ViewModelFactory.getStoryInstance(this)
+//        val viewModel: StoryViewModel by viewModels {
+//            factory
+//        }
+//        viewModel.getStories().observe(this){result ->
+//            if(result!= null){
+//                when(result){
+//                    is Result.Loading -> {
+//                        binding!!.progressBarMain.visibility = View.VISIBLE
+//                    }
+//                    is Result.Error -> {
+//                        binding!!.progressBarMain.visibility = View.GONE
+//                        Toast.makeText(this, "Error: ${result.error}", Toast.LENGTH_LONG).show()
+//                    }
+//                    is Result.Success -> {
+//                        binding!!.progressBarMain.visibility = View.GONE
+//                        showData(viewModel)
+//                    }
+//                }
+//            }
+//        }
         val factory: ViewModelFactory = ViewModelFactory.getStoryInstance(this)
-        val viewModel: StoryViewModel by viewModels {
+        val viewmodel: StoryViewModel by viewModels {
             factory
         }
-        viewModel.getStories().observe(this){result ->
-            if(result!= null){
-                when(result){
-                    is Result.Loading -> {
-                        binding!!.progressBarMain.visibility = View.VISIBLE
-                    }
-                    is Result.Error -> {
-                        binding!!.progressBarMain.visibility = View.GONE
-                        Toast.makeText(this, "Error: ${result.error}", Toast.LENGTH_LONG).show()
-                    }
-                    is Result.Success -> {
-                        binding!!.progressBarMain.visibility = View.GONE
-                        showData(result.data)
-                    }
-                }
-            }
-        }
+        showData(viewModel = viewmodel)
         super.onResume()
     }
-    fun showData(listStory: List<ListStoryItem>){
+    fun showData(viewModel: StoryViewModel){
         binding!!.rvStory.layoutManager = LinearLayoutManager(this)
-        val adapter = StoryAdapter(listStory)
-        binding!!.rvStory.adapter = adapter
-        var listPhoto: ArrayList<String>? = null
-        for (story in listStory){
-            listPhoto?.add(story.photoUrl)
+        val adapter = StoryAdapter()
+        binding!!.rvStory.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter{
+                adapter.retry()
+            }
+        )
+        viewModel.storyPaging.observe(this) {
+            adapter.submitData(lifecycle, it)
         }
+//        var listPhoto: ArrayList<String>? = null
+//        for (story in listStory){
+//            listPhoto?.add(story.photoUrl)
+//        }
     }
 }

@@ -21,4 +21,6 @@
     <string name="username">Username</string>
     <string name="logout">Logout</string>
     <string name="langguage">Langguage</string>
+    <string name="title_activity_list_story_maps">ListStoryMapsActivity</string>
+    <string name="retry">Coba lagi!</string>
 </resources>

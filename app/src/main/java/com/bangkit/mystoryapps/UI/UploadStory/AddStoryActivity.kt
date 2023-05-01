@@ -4,10 +4,12 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.location.Location
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,6 +21,8 @@ import com.bangkit.mystoryapps.data.Result
 import com.bangkit.mystoryapps.data.viewmodels.StoryViewModel
 import com.bangkit.mystoryapps.data.viewmodels.ViewModelFactory
 import com.bangkit.mystoryapps.databinding.ActivityAddStoryBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -29,6 +33,9 @@ import java.io.File
 class AddStoryActivity : AppCompatActivity() {
     private var binding: ActivityAddStoryBinding? = null
     private var getFile: File? = null
+    private var lat: Float? = null
+    private var lon: Float? = null
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +45,7 @@ class AddStoryActivity : AppCompatActivity() {
 
         val factory: ViewModelFactory = ViewModelFactory.getStoryInstance(this)
         val viewModel: StoryViewModel by viewModels { factory }
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
@@ -46,6 +54,7 @@ class AddStoryActivity : AppCompatActivity() {
                 REQUEST_CODE_PERMISSIONS
             )
         }
+        getUserLocation()
         binding!!.btnStartCameraX.setOnClickListener{
             startCameraX()
         }
@@ -57,18 +66,61 @@ class AddStoryActivity : AppCompatActivity() {
         }
     }
 
+//    private val requestPermissionLauncher =
+//        registerForActivityResult(
+//            ActivityResultContracts.RequestMultiplePermissions()
+//        ) {permissions ->
+//            when{
+//                permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
+//                    getUserLocation()
+//                }
+//                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
+//                    getUserLocation()
+//                }
+//            }
+//        }
+
+//    private fun checkPermission(permission: String): Boolean{
+//        return ContextCompat.checkSelfPermission(
+//            this,
+//            permission
+//        ) == PackageManager.PERMISSION_GRANTED
+//    }
+    private fun getUserLocation() {
+        if(allPermissionsGranted()){
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if(location != null){
+                    lat = location.latitude.toFloat()
+                    lon = location.longitude.toFloat()
+                    Log.d("MyLocation", lat.toString() + ' ' + lon.toString())
+                }
+            }
+        }
+//        else{
+//            requestPermissionLauncher.launch(
+//                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+//            )
+//        }
+    }
     private fun uploadImage(viewModel: StoryViewModel){
         if(getFile != null){
             val file = reduceFileImage(getFile as File)
 
             val description = binding!!.txtDescriptionAddStory.text.toString().toRequestBody("text/plain".toMediaType())
+
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imageMultiPart : MultipartBody.Part = MultipartBody.Part.createFormData(
                 "photo",
                 file.name,
                 requestImageFile
             )
-            viewModel.addStory(imageMultiPart, description).observe(this){result ->
+            if(!binding!!.switchLocation.isChecked){
+                lat = null
+                lon = null
+            }
+            val latSend = lat.toString().toRequestBody("text/plain".toMediaType())
+            val lonSend = lon.toString().toRequestBody("text/plain".toMediaType())
+            viewModel.addStory(imageMultiPart, description, latSend, lonSend).observe(this){result ->
                 if(result != null){
                     when(result){
                         is Result.Loading -> {
@@ -160,7 +212,7 @@ class AddStoryActivity : AppCompatActivity() {
 
     companion object{
         const val CAMERA_X_RESULT = 200
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
         private const val REQUEST_CODE_PERMISSIONS = 10
     }
 }
