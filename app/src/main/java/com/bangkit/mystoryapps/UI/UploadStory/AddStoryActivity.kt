@@ -115,8 +115,8 @@ class AddStoryActivity : AppCompatActivity() {
                 requestImageFile
             )
             if(!binding!!.switchLocation.isChecked){
-                lat = null
-                lon = null
+                lat = "0.0".toFloat()
+                lon = "0.0".toFloat()
             }
             val latSend = lat.toString().toRequestBody("text/plain".toMediaType())
             val lonSend = lon.toString().toRequestBody("text/plain".toMediaType())

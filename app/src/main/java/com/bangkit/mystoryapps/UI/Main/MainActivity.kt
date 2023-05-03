@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
                 adapter.retry()
             }
         )
-        viewModel.storyPaging.observe(this) {
+        viewModel.storyPaging().observe(this) {
             adapter.submitData(lifecycle, it)
         }
 //        var listPhoto: ArrayList<String>? = null
