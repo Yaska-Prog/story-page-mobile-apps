@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.bangkit.mystoryapps.data.local.Entity.RemoteKeysEntity
 import com.bangkit.mystoryapps.data.local.Entity.StoryEntity
-import kotlinx.coroutines.CoroutineScope
 
 @Database(
     entities = [StoryEntity::class, RemoteKeysEntity::class],

@@ -88,7 +88,7 @@ class StoryRemoteMediator(
                     RemoteKeysEntity(id = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
                 database.remoteDao().insertAll(keys as List<RemoteKeysEntity>)
-                database.storyDao().insertStory(listStory as List<StoryEntity>)
+                database.storyDao().insertStory(listStory)
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached as Boolean)
         } catch (exception: Exception){

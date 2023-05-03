@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,11 +13,8 @@ import com.bangkit.mystoryapps.R
 import com.bangkit.mystoryapps.UI.Landing.LandingActivity
 import com.bangkit.mystoryapps.UI.UploadStory.AddStoryActivity
 import com.bangkit.mystoryapps.UI.maps.ListStoryMapsActivity
-import com.bangkit.mystoryapps.data.remote.response.ListStoryItem
 import com.bangkit.mystoryapps.data.viewmodels.ViewModelFactory
 import com.bangkit.mystoryapps.databinding.ActivityMainBinding
-import com.bangkit.mystoryapps.data.Result
-import com.bangkit.mystoryapps.data.local.Entity.StoryEntity
 import com.bangkit.mystoryapps.data.local.SharedPreferenceManager
 import com.bangkit.mystoryapps.data.viewmodels.StoryViewModel
 
@@ -35,23 +31,6 @@ class MainActivity : AppCompatActivity() {
             factory
         }
         showData(viewModel = viewmodel)
-//        viewmodel.getStories().observe(this){result ->
-//            if(result!= null){
-//                when(result){
-//                    is Result.Loading -> {
-//                        binding!!.progressBarMain.visibility = View.VISIBLE
-//                    }
-//                    is Result.Error -> {
-//                        binding!!.progressBarMain.visibility = View.GONE
-//                        Toast.makeText(this, "Error: ${result.error}", Toast.LENGTH_LONG).show()
-//                    }
-//                    is Result.Success -> {
-//                        binding!!.progressBarMain.visibility = View.GONE
-//                        showData(result.data)
-//                    }
-//                }
-//            }
-//        }
         binding!!.fabAddStory.setOnClickListener{
             val intent = Intent(this@MainActivity, AddStoryActivity::class.java)
             startActivity(intent)
@@ -86,27 +65,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-//        val factory: ViewModelFactory = ViewModelFactory.getStoryInstance(this)
-//        val viewModel: StoryViewModel by viewModels {
-//            factory
-//        }
-//        viewModel.getStories().observe(this){result ->
-//            if(result!= null){
-//                when(result){
-//                    is Result.Loading -> {
-//                        binding!!.progressBarMain.visibility = View.VISIBLE
-//                    }
-//                    is Result.Error -> {
-//                        binding!!.progressBarMain.visibility = View.GONE
-//                        Toast.makeText(this, "Error: ${result.error}", Toast.LENGTH_LONG).show()
-//                    }
-//                    is Result.Success -> {
-//                        binding!!.progressBarMain.visibility = View.GONE
-//                        showData(viewModel)
-//                    }
-//                }
-//            }
-//        }
         val factory: ViewModelFactory = ViewModelFactory.getStoryInstance(this)
         val viewmodel: StoryViewModel by viewModels {
             factory
@@ -125,9 +83,5 @@ class MainActivity : AppCompatActivity() {
         viewModel.storyPaging().observe(this) {
             adapter.submitData(lifecycle, it)
         }
-//        var listPhoto: ArrayList<String>? = null
-//        for (story in listStory){
-//            listPhoto?.add(story.photoUrl)
-//        }
     }
 }

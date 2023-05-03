@@ -12,7 +12,6 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.Intents.intended
 import com.bangkit.mystoryapps.UI.Main.MainActivity
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.intent.matcher.IntentMatchers
 import com.bangkit.mystoryapps.UI.Landing.LandingActivity
 import org.junit.After
 import org.junit.Assert.*
@@ -50,11 +49,11 @@ class LoginActivityTest{
         Espresso.onView(ViewMatchers.withId(com.bangkit.mystoryapps.R.id.btnLogin)).perform(
             ViewActions.click())
         Thread.sleep(10000)
-        Intents.intended(IntentMatchers.hasComponent(MainActivity::class.java.name))
+        intended(hasComponent(MainActivity::class.java.name))
         Espresso.onView(ViewMatchers.withId(com.bangkit.mystoryapps.R.id.rvStory)).check(matches(
             ViewMatchers.isDisplayed()))
         Espresso.onView(ViewMatchers.withId(com.bangkit.mystoryapps.R.id.btnLogout)).perform(
             ViewActions.click())
-        Intents.intended(IntentMatchers.hasComponent(LandingActivity::class.java.name))
+        intended(hasComponent(LandingActivity::class.java.name))
     }
 }

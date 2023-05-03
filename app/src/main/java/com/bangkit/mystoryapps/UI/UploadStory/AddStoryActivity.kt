@@ -66,26 +66,6 @@ class AddStoryActivity : AppCompatActivity() {
         }
     }
 
-//    private val requestPermissionLauncher =
-//        registerForActivityResult(
-//            ActivityResultContracts.RequestMultiplePermissions()
-//        ) {permissions ->
-//            when{
-//                permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
-//                    getUserLocation()
-//                }
-//                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
-//                    getUserLocation()
-//                }
-//            }
-//        }
-
-//    private fun checkPermission(permission: String): Boolean{
-//        return ContextCompat.checkSelfPermission(
-//            this,
-//            permission
-//        ) == PackageManager.PERMISSION_GRANTED
-//    }
     private fun getUserLocation() {
         if(allPermissionsGranted()){
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
@@ -96,11 +76,6 @@ class AddStoryActivity : AppCompatActivity() {
                 }
             }
         }
-//        else{
-//            requestPermissionLauncher.launch(
-//                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-//            )
-//        }
     }
     private fun uploadImage(viewModel: StoryViewModel){
         if(getFile != null){

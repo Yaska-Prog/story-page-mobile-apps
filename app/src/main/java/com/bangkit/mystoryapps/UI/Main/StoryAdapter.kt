@@ -11,7 +11,7 @@ import com.bangkit.mystoryapps.data.local.Entity.StoryEntity
 import com.bangkit.mystoryapps.databinding.ItemStoryBinding
 import com.bumptech.glide.Glide
 
-class StoryAdapter() :
+class StoryAdapter :
     PagingDataAdapter<StoryEntity, StoryAdapter.ViewHolder>(DIFF_CALLBACK)
 {
     class ViewHolder(view: ItemStoryBinding) : RecyclerView.ViewHolder(view.root){
@@ -22,11 +22,6 @@ class StoryAdapter() :
         val binding = ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
-
-//    override fun getItemCount(): Int {
-//        return listStory.size
-//    }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = getItem(position)
         holder.txtUser.text = data?.name

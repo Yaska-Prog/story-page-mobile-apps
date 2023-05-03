@@ -1,7 +1,6 @@
 package com.bangkit.mystoryapps.data.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.ExperimentalPagingApi
@@ -12,23 +11,17 @@ import androidx.paging.PagingSource
 import androidx.paging.liveData
 import com.bangkit.mystoryapps.data.Result
 import com.bangkit.mystoryapps.data.local.Entity.StoryEntity
-import com.bangkit.mystoryapps.data.local.database.MyStoryDatabase
 import com.bangkit.mystoryapps.data.local.database.StoryRemoteMediator
-import com.bangkit.mystoryapps.data.remote.retrofit.ApiService
 import com.bangkit.mystoryapps.data.repositories.StoryRepository
-import com.bangkit.mystoryapps.data.repositories.UserRepository
 import com.bangkit.mystoryapps.utils.DataDummy
 import com.bangkit.mystoryapps.utils.getOrAwaitValue
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -83,7 +76,7 @@ class StoryViewModelTest{
             `when`(storyRepo.getStoryPaging()).thenReturn(expectedRes)
             val actualRes = storyViewModel.storyPaging().observeForever(observer)
             Mockito.verify(storyRepo).getStoryPaging()
-            Assert.assertNotNull(actualRes)
+            assertNotNull(actualRes)
         }finally {
             storyViewModel.storyPaging().removeObserver(observer)
         }
@@ -96,10 +89,10 @@ class StoryViewModelTest{
         `when`(storyRepo.getAllStory()).thenReturn(expectedStory)
         val actualStory = storyViewModel.getAllStoryList().getOrAwaitValue()
         Mockito.verify(storyRepo).getAllStory()
-        Assert.assertNotNull(actualStory)
-        Assert.assertTrue(actualStory is Result.Success)
-        Assert.assertEquals(dummyStory.size, (actualStory as Result.Success).data.size)
-        Assert.assertEquals(dummyStory[0], (actualStory as Result.Success).data[0])
+        assertNotNull(actualStory)
+        assertTrue(actualStory is Result.Success)
+        assertEquals(dummyStory.size, (actualStory as Result.Success).data.size)
+        assertEquals(dummyStory[0], actualStory.data[0])
     }
 
     @Test
@@ -109,7 +102,7 @@ class StoryViewModelTest{
         `when`(storyRepo.getAllStory()).thenReturn(expectedStory)
         val actualStory = storyViewModel.getAllStoryList().getOrAwaitValue()
         Mockito.verify(storyRepo).getAllStory()
-        Assert.assertNotNull(actualStory)
-        Assert.assertTrue(actualStory is Result.Error)
+        assertNotNull(actualStory)
+        assertTrue(actualStory is Result.Error)
     }
 }

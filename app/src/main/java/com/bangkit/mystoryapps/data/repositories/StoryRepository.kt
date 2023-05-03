@@ -7,17 +7,14 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
-import androidx.room.util.foreignKeyCheck
 import com.bangkit.mystoryapps.data.Result
 import com.bangkit.mystoryapps.data.local.Entity.StoryEntity
-import com.bangkit.mystoryapps.data.local.Paging.StoryPagingSource
 import com.bangkit.mystoryapps.data.local.database.MyStoryDao
 import com.bangkit.mystoryapps.data.local.database.MyStoryDatabase
 import com.bangkit.mystoryapps.data.local.database.StoryRemoteMediator
 import com.bangkit.mystoryapps.data.remote.response.AddStoryResponse
 import com.bangkit.mystoryapps.data.remote.response.ListStoryItem
 import com.bangkit.mystoryapps.data.remote.response.Story
-import com.bangkit.mystoryapps.data.remote.response.StoryResponse
 import com.bangkit.mystoryapps.data.remote.retrofit.ApiService
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -27,35 +24,6 @@ class StoryRepository private constructor(
     private val storyDao: MyStoryDao,
     private val storyDatabase: MyStoryDatabase
 ){
-    fun getStories(): LiveData<Result<List<StoryEntity>>> = liveData {
-        emit(Result.Loading)
-        try {
-            val client = apiService.getStories()
-            if(client.isSuccessful && client.body() != null){
-                val responseBody = client.body()
-                val story = responseBody?.listStory as List<ListStoryItem>
-                val listStory = story.map { stories ->
-                    StoryEntity(
-                        stories.id,
-                        stories.name,
-                        stories.description,
-                        stories.photoUrl,
-                        stories.createdAt,
-                        stories.lat.toString(),
-                        stories.lon.toString(),
-                    )
-                }
-                storyDao.insertStory(listStory)
-                emit(Result.Success(listStory))
-            }
-            else{
-                emit(Result.Error("Error: ${client.errorBody()}"))
-            }
-        } catch (e: Exception){
-            emit(Result.Error("Retrofit failed, message: ${e.message}"))
-        }
-    }
-
     fun getAllStory(): LiveData<Result<List<StoryEntity>>> = liveData {
         emit(Result.Loading)
         try {
