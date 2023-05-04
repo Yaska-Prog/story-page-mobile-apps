@@ -3,7 +3,7 @@ package com.bangkit.mystoryapps.utils
 import com.bangkit.mystoryapps.data.local.Entity.StoryEntity
 
 object DataDummy {
-    fun generateDummyStoryEntity(): ArrayList<StoryEntity>{
+    fun generateDummyStoryEntity(): List<StoryEntity>{
         val storyList = ArrayList<StoryEntity>()
         for(i in 0..15){
             val story = StoryEntity(
