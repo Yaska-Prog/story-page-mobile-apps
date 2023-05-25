@@ -27,8 +27,26 @@ class StoryRepository private constructor(
     fun getAllStory(): LiveData<Result<List<StoryEntity>>> = liveData {
         emit(Result.Loading)
         try {
-            val listStory = storyDao.getAllStoryList()
-            emit(Result.Success(listStory))
+            val client = apiService.getStories()
+            if(client.isSuccessful && client.body() != null){
+                val body = client.body()
+                val data = body!!.listStory
+                val listStory = data.map { stories ->
+                    StoryEntity(
+                        stories.id,
+                        stories.name,
+                        stories.description,
+                        stories.photoUrl,
+                        stories.createdAt,
+                        stories.lat.toString(),
+                        stories.lon.toString()
+                    )
+                }
+                emit(Result.Success(listStory))
+            }
+            else{
+                emit(Result.Error("Retrofit failed to get data"))
+            }
         } catch (exception: Exception){
             emit(Result.Error("Retrofit failed, message: ${exception.message}"))
         }
@@ -69,7 +87,7 @@ class StoryRepository private constructor(
                 emit(Result.Success(responseBody!!))
             }
             else{
-                emit(Result.Error("File yang akan di upload mengalami error, silahkan cek kembali file nya dan pastikan ukurannya tidak lebih dari 1 mb."))
+                emit(Result.Error("File yang akan di upload mengalami error, silahkan coba upload kembali karena map terkadang gagal mengambil lokasi, harap upload kembali."))
             }
         } catch (e: Exception){
             emit(Result.Error("Retrofit Error, message: ${e.message}"))

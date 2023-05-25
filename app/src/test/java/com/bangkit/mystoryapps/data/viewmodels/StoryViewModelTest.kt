@@ -1,6 +1,7 @@
 package com.bangkit.mystoryapps.data.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
@@ -60,6 +61,8 @@ class StoryViewModelTest{
         val data: PagingData<StoryEntity> = StoryPagingSource.snapshot(dummyStory)
         val expectedRes = MutableLiveData<PagingData<StoryEntity>>()
         expectedRes.value = data
+        val dummyRes = expectedRes.value
+
         `when`(storyRepo.getStoryPaging()).thenReturn(expectedRes)
         storyViewModel = StoryViewModel(storyRepo)
         val actualResult = storyViewModel.storyPaging().getOrAwaitValue()
@@ -73,7 +76,7 @@ class StoryViewModelTest{
 
         Assert.assertNotNull(differ.snapshot())
         Assert.assertEquals(dummyStory.size, differ.snapshot().size)
-        Assert.assertEquals(dummyStory[0].id, differ.snapshot().items[0].id)
+        Assert.assertEquals(dummyStory[0], differ.snapshot()[0])
     }
 
     @Test
@@ -92,7 +95,6 @@ class StoryViewModelTest{
             workerDispatcher = Dispatchers.Main
         )
         differ.submitData(actualStory)
-
         Assert.assertEquals(0, differ.snapshot().size)
     }
     private val noopListUpdate = object : ListUpdateCallback{

@@ -39,32 +39,43 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding!!.btnLogin.setOnClickListener{
-            val email = binding!!.txtUsernameLogin.text.toString()
-            val password = binding!!.txtPassword.text.toString()
+            if(binding!!.txtUsernameLogin.text.isNullOrEmpty() || binding!!.txtPassword.text.isNullOrEmpty()){
+                Toast.makeText(this, "Data tidak boleh kosong", Toast.LENGTH_LONG).show()
+            }
+            else{
+                if(binding!!.txtPassword.error != null || binding!!.txtUsernameLogin.error != null){
+                    Toast.makeText(this, "Data tidak valid!", Toast.LENGTH_LONG).show()
+                }
+                else{
+                    val email = binding!!.txtUsernameLogin.text.toString()
+                    val password = binding!!.txtPassword.text.toString()
 
-            viewModel.loginUser(email, password).observe(this){result->
-                if(result!= null){
-                    when(result){
-                        is Result.Success -> {
-                            binding!!.progressLogin.visibility = View.GONE
-                            val user = UserEntity(result.data.loginResult.userId, result.data.loginResult.name, result.data.loginResult.token)
-                            sharedPreferenceManager.saveUser(user)
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }
-                        is Result.Error -> {
-                            binding!!.progressLogin.visibility = View.GONE
-                            Log.e("resErr", result.error)
-                            Toast.makeText(this, "Error: ${result.error}", Toast.LENGTH_LONG).show()
-                        }
-                        Result.Loading -> {
-                            //pasang loading button
-                            binding!!.progressLogin.visibility = View.VISIBLE
+                    viewModel.loginUser(email, password).observe(this){result->
+                        if(result!= null){
+                            when(result){
+                                is Result.Success -> {
+                                    binding!!.progressLogin.visibility = View.GONE
+                                    val user = UserEntity(result.data.loginResult.userId, result.data.loginResult.name, result.data.loginResult.token)
+                                    sharedPreferenceManager.saveUser(user)
+                                    val intent = Intent(this, MainActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                is Result.Error -> {
+                                    binding!!.progressLogin.visibility = View.GONE
+                                    Log.e("resErr", result.error)
+                                    Toast.makeText(this, "Error: ${result.error}", Toast.LENGTH_LONG).show()
+                                }
+                                Result.Loading -> {
+                                    //pasang loading button
+                                    binding!!.progressLogin.visibility = View.VISIBLE
+                                }
+                            }
                         }
                     }
                 }
             }
+
         }
     }
 

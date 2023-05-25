@@ -25,22 +25,35 @@ class RegisterActivity : AppCompatActivity() {
             factory
         }
         binding!!.btnRegis.setOnClickListener{
-            val username = binding!!.txtUsernameRegister.text.toString()
-            val password = binding!!.txtPasswordRegister.text.toString()
-            val email = binding!!.txtEmailRegister.text.toString()
+            if(binding!!.txtEmailRegister.text.isNullOrEmpty() || binding!!.txtUsernameRegister.text.isNullOrEmpty() || binding!!.txtPasswordRegister.text.isNullOrEmpty()){
+                Toast.makeText(this, "Data tidak boleh kosong", Toast.LENGTH_LONG).show()
+            }
+            else{
+                if(binding!!.txtEmailRegister.error.isNullOrEmpty() && binding!!.txtUsernameRegister.error.isNullOrEmpty() && binding!!.txtPasswordRegister.error.isNullOrEmpty()){
+                    val username = binding!!.txtUsernameRegister.text.toString()
+                    val password = binding!!.txtPasswordRegister.text.toString()
+                    val email = binding!!.txtEmailRegister.text.toString()
 
-            viewModel.regisUser(username, email, password).observe(this){result ->
-                if(result != null){
-                    when(result){
-                        is Result.Loading -> {
-                        }
-                        is Result.Error -> {
-                            Toast.makeText(this, "Error: ${result.error}", Toast.LENGTH_LONG).show()
-                        }
-                        is Result.Success -> {
-                            Toast.makeText(this, "Sukses membuat akun dengan nama $username silahkan kembali ke halaman login!", Toast.LENGTH_LONG).show()
+                    viewModel.regisUser(username, email, password).observe(this){result ->
+                        if(result != null){
+                            when (result){
+                                is Result.Loading -> {
+                                }
+                                is Result.Error -> {
+                                    Toast.makeText(this, "Error: ${result.error}", Toast.LENGTH_LONG).show()
+                                }
+                                is Result.Success -> {
+                                    Toast.makeText(this, "Sukses membuat akun dengan nama $username silahkan kembali ke halaman login!", Toast.LENGTH_LONG).show()
+                                }
+                                else -> {
+                                    Toast.makeText(this, "Result not found", Toast.LENGTH_LONG).show()
+                                }
+                            }
                         }
                     }
+                }
+                else{
+                    Toast.makeText(this, "Data tidak valid!", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -48,8 +61,8 @@ class RegisterActivity : AppCompatActivity() {
     private fun playAnimation(){
         val textRegis = ObjectAnimator.ofFloat(binding!!.txtRegRegister, View.ALPHA, 1f).setDuration(500)
         val textUsername = ObjectAnimator.ofFloat(binding!!.txtUserRegister, View.ALPHA, 1f).setDuration(500)
-        val textPassword = ObjectAnimator.ofFloat(binding!!.txtPasswordRegister, View.ALPHA, 1f).setDuration(500)
-        val textEmail = ObjectAnimator.ofFloat(binding!!.txtEmailRegister, View.ALPHA, 1f).setDuration(500)
+        val textPassword = ObjectAnimator.ofFloat(binding!!.textPasswordRegister, View.ALPHA, 1f).setDuration(500)
+        val textEmail = ObjectAnimator.ofFloat(binding!!.textEmailRegister, View.ALPHA, 1f).setDuration(500)
         val txtUsername = ObjectAnimator.ofFloat(binding!!.txtUsernameRegister, View.ALPHA, 1f).setDuration(500)
         val txtPassword = ObjectAnimator.ofFloat(binding!!.txtPasswordRegister, View.ALPHA, 1f).setDuration(500)
         val txtEmail = ObjectAnimator.ofFloat(binding!!.txtEmailRegister, View.ALPHA, 1f).setDuration(500)

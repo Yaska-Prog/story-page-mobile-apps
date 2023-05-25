@@ -20,4 +20,5 @@ class StoryViewModel(private val storyRepo: StoryRepository): ViewModel() {
     fun addStory(image: MultipartBody.Part, description: RequestBody, lat: RequestBody?, lon: RequestBody?) = storyRepo.uploadImage(image, description, lat, lon)
 
     fun getAllStoryList(): LiveData<Result<List<StoryEntity>>> = storyRepo.getAllStory()
+
 }

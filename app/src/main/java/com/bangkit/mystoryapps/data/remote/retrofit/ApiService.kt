@@ -31,11 +31,12 @@ interface ApiService {
     ): Response<LoginResponse>
 
     @GET("stories")
-    suspend fun getStories(): Response<StoryResponse>
+    suspend fun getStories(
+        @Query("location") location: Int = 1
+    ): Response<StoryResponse>
 
     @GET("stories")
     suspend fun getStoriesPaging(
-        @Query("location") location: Int = 1,
         @Query("page") page: Int,
         @Query("size") size: Int
     ): Response<StoryResponse>

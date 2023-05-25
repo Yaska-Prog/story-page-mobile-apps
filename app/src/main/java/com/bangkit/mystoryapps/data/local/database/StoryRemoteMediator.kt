@@ -73,8 +73,8 @@ class StoryRemoteMediator(
                     stories.description,
                     stories.photoUrl,
                     stories.createdAt,
-                    stories.lat.toString(),
-                    stories.lon.toString()
+                    null,
+                    null
                 )
             }
             database.withTransaction {

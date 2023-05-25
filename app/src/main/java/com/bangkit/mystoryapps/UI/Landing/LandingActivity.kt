@@ -1,8 +1,13 @@
 package com.bangkit.mystoryapps.UI.Landing
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import com.bangkit.mystoryapps.UI.Login.LoginActivity
 import com.bangkit.mystoryapps.UI.Main.MainActivity
 import com.bangkit.mystoryapps.UI.Regis.RegisterActivity
@@ -32,7 +37,6 @@ class LandingActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
     override fun onBackPressed() {
         finish()
         super.onBackPressed()
